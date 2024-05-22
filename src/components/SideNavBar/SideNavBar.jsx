@@ -16,11 +16,11 @@ export const SideNavBar = () => {
             <fieldset>
               <legend>Sort By</legend>
               <div>
-                <input type="checkbox" id="LOW-TO-HIGH" />
+                <input type="radio" id="LOW-TO-HIGH" name="sorting" />
                 <label htmlFor="LOW-TO-HIGH">Low To High</label>
               </div>
               <div>
-                <input type="checkbox" id="HIGH-TO-LOW" />
+                <input type="radio" id="HIGH-TO-LOW" name="sorting" />
                 <label htmlFor="HIGH-TO-LOW">High To Low</label>
               </div>
             </fieldset>
