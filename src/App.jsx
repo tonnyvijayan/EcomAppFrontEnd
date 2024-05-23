@@ -5,8 +5,8 @@ import { SideNavBar } from "./components/SideNavBar/SideNavBar";
 function App() {
   return (
     <>
-      {/* <div>hello</div> */}
       <TopNavBar />
+
       <SideNavBar />
     </>
   );

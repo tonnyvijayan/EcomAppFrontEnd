@@ -5,6 +5,9 @@
   width: 250px;
   background-color: #aaa;
   height: 100vh;
+  /* position: sticky;
+  top: 111px;
+  left: 40px; */
 }
 .side-nav-bar-categories-container {
   display: flex;

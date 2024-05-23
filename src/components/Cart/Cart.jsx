@@ -1,6 +1,6 @@
 import "./Cart.css";
 
-export function Cart() {
+export const Cart = () => {
   return (
     <div className="cart-page-container">
       <table>
@@ -89,4 +89,4 @@ export function Cart() {
       </div>
     </div>
   );
-}
+};

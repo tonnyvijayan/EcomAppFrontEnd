@@ -1,4 +1,7 @@
 .Top-Nav-Bar-Container {
+  position: sticky;
+  top: 0px;
+  left: 0px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -6,6 +9,7 @@
   width: 100%;
   height: 110px;
   background-color: #f8f9fc;
+  /* z-index: 10; */
 }
 .brand-logo-container {
   /* background-color: yellow; */
