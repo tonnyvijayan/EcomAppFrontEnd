@@ -1,0 +1,14 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 2/6;
+  background-color: #f0faf6;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .main-container {
+    grid-column: 1/6;
+  }
+}

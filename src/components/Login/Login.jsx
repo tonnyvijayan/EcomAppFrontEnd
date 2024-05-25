@@ -1,4 +1,5 @@
 import "./Login.css";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   return (
@@ -20,7 +21,7 @@ export const Login = () => {
         <div className="login-button-container">
           <button>Log in</button>
         </div>
-        <a href="/">Create new account</a>
+        <Link to="/signup">Create new account</Link>
       </div>
     </>
   );

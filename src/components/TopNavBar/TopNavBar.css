@@ -1,4 +1,5 @@
 .Top-Nav-Bar-Container {
+  grid-column: 1/6;
   position: sticky;
   top: 0px;
   left: 0px;
@@ -9,7 +10,7 @@
   width: 100%;
   height: 110px;
   background-color: #f8f9fc;
-  /* z-index: 10; */
+  z-index: 10;
 }
 .brand-logo-container {
   /* background-color: yellow; */
@@ -25,12 +26,25 @@
 .user-detail-container {
   /* background-color: yellow; */
   display: flex;
-  /* justify-content: center; */
-  /* align-content: space-around; */
+  justify-content: space-between;
+
+  align-items: center;
   height: 100%;
 }
 
-.user-detail-container img {
-  width: 40px;
-  padding: 1rem;
+/* .user-detail-container img {
+  width: 0px;
+  padding: 1.5rem;
+} */
+
+.brand-logo {
+  margin-right: 5px;
+  width: 60px;
+  padding: 0.4rem;
 }
+
+/* with media queries */
+/* .brand-logo {
+  width: 50px;
+  padding: 0.5rem;
+} */

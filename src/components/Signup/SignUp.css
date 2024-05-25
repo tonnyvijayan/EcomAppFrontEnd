@@ -3,10 +3,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 400px;
+  /* width: 400px; */
+  width: 90vw;
+  max-width: 400px;
   height: 500px;
   background-color: #fff;
   border-radius: 10px;
+  border: 1px solid rgb(235, 229, 229);
 }
 .signup-container a {
   text-decoration: none;

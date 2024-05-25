@@ -1,6 +1,9 @@
 import "./SideNavBar.css";
+import { useLocation } from "react-router-dom";
 
 export const SideNavBar = () => {
+  const location = useLocation();
+
   return (
     <>
       <div className="side-nav-bar-container">
@@ -11,38 +14,40 @@ export const SideNavBar = () => {
           <a href="">Succulents</a>
           <a href="">Hanging</a>
         </div>
-        <div className="side-nav-bar-filters-container">
-          <div className="fieldsetDivContainer">
-            <fieldset>
-              <legend>Sort By</legend>
-              <div>
-                <input type="radio" id="LOW-TO-HIGH" name="sorting" />
-                <label htmlFor="LOW-TO-HIGH">Low To High</label>
-              </div>
-              <div>
-                <input type="radio" id="HIGH-TO-LOW" name="sorting" />
-                <label htmlFor="HIGH-TO-LOW">High To Low</label>
-              </div>
-            </fieldset>
+        {location.pathname === "/" ? (
+          <div className="side-nav-bar-filters-container">
+            <div className="fieldsetDivContainer">
+              <fieldset>
+                <legend>Sort By</legend>
+                <div>
+                  <input type="radio" id="LOW-TO-HIGH" name="sorting" />
+                  <label htmlFor="LOW-TO-HIGH">Low To High</label>
+                </div>
+                <div>
+                  <input type="radio" id="HIGH-TO-LOW" name="sorting" />
+                  <label htmlFor="HIGH-TO-LOW">High To Low</label>
+                </div>
+              </fieldset>
+            </div>
+            <div className="fieldsetDivContainer">
+              <fieldset>
+                <legend>Filter</legend>
+                <div>
+                  <input type="checkbox" id="Fast-Delivery" />
+                  <label htmlFor="Fast-Delivery">Fast-Delivery</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="Out-Of-Stock" />
+                  <label htmlFor="Out-Of-Stock">Out Of Stock</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="New-Item" />
+                  <label htmlFor="New-Item">New</label>
+                </div>
+              </fieldset>
+            </div>
           </div>
-          <div className="fieldsetDivContainer">
-            <fieldset>
-              <legend>Filter</legend>
-              <div>
-                <input type="checkbox" id="Fast-Delivery" />
-                <label htmlFor="Fast-Delivery">Fast-Delivery</label>
-              </div>
-              <div>
-                <input type="checkbox" id="Out-Of-Stock" />
-                <label htmlFor="Out-Of-Stock">Out Of Stock</label>
-              </div>
-              <div>
-                <input type="checkbox" id="New-Item" />
-                <label htmlFor="New-Item">New</label>
-              </div>
-            </fieldset>
-          </div>
-        </div>
+        ) : null}
       </div>
     </>
   );
