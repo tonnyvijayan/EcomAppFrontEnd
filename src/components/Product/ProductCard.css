@@ -45,7 +45,7 @@
   box-shadow: 2px 2px 8px #fff;
 }
 
-.button-primary-one {
+.card-button-primary {
   background-color: #1e453e;
   color: #fff;
   padding: 1rem 2rem;
@@ -53,6 +53,17 @@
   font-weight: bold;
   outline: none;
   border: 1px solid #1e453e;
+}
+
+.card-button-secondary {
+  background-color: #fff;
+  color: #1e453e;
+  padding: 1rem 2rem;
+  cursor: not-allowed;
+
+  font-weight: bold;
+  outline: none;
+  border: 2px solid #1e453e;
 }
 
 .card-description {

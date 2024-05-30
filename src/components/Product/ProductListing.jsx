@@ -8,10 +8,11 @@ export const ProductListing = () => {
   return (
     <div className="productlisting-container">
       {state.products.map((item) => {
-        const { name, price, imageUrl, rating } = item;
+        const { _id, name, price, imageUrl, rating } = item;
         return (
           <ProductCard
-            key={name}
+            productId={_id}
+            key={_id}
             title={name}
             price={price}
             imageUrl={imageUrl}

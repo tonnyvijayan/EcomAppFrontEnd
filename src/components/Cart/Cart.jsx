@@ -1,92 +1,100 @@
+import { useProductContext } from "../../hooks/useProductContext";
 import "./Cart.css";
-
+import { EmptyCart } from "./EmptyCart";
+//
 export const Cart = () => {
+  const { state } = useProductContext();
+
+  const productsInCart = state.cartItems.map((item) => {
+    const [productDetails] = state.products.filter((product) => {
+      return product._id === item._id;
+    });
+    console.log(productDetails);
+    return { ...item, _id: productDetails };
+  });
+  const cartTotal = productsInCart.reduce(
+    (total, item) => total + item._id.price,
+    0
+  );
+  console.log(productsInCart.length);
   return (
-    <div className="cart-page-container">
-      <table>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-        </tr>
+    <>
+      {productsInCart.length === 0 ? (
+        <EmptyCart />
+      ) : (
+        <div className="cart-page-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
 
-        <tr>
-          <td>
-            <div className="cart-info-container">
-              <img src="https://media.greg.app/cGxhbnQtZGItcGhvdG9zL21vbnN0ZXJhXy5qcGc=?format=pjpeg&optimize=high&auto=webp&precrop=1000:1000,smart&fit=crop&width=1000&height=1000" />
-              <div className="cart-item-description">
-                <h3>Monstera</h3>
-                <small>Price 300</small>
-                <div className="cart-button-div">
-                  <button className="button-primary-cartlist">
-                    To Wishlist
-                  </button>
+            <tbody>
+              {productsInCart.map((item) => {
+                const { _id, name, price, imageUrl } = item._id;
+                return (
+                  <>
+                    <tr key={_id}>
+                      <td>
+                        <div className="cart-info-container">
+                          <img src={imageUrl} />
+                          <div className="cart-item-description">
+                            <h3>{name}</h3>
+                            <small>Price {price}</small>
+                            <div className="cart-button-div">
+                              <button className="button-primary-cartlist">
+                                To Wishlist
+                              </button>
 
-                  <button className="button-secondary-cartlist">Remove</button>
-                </div>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="quantity-container">
-              <button>+</button>
-              <span>1</span>
-              <button>-</button>
-            </div>
-          </td>
-          <td>Rs.1200</td>
-        </tr>
-        {/*  */}
+                              <button className="button-secondary-cartlist">
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="quantity-container">
+                          <button>+</button>
+                          <span>{item.quantity}</span>
+                          <button>-</button>
+                        </div>
+                      </td>
+                      <td>Rs.{item.quantity * price}</td>
+                    </tr>
+                  </>
+                );
+              })}
+            </tbody>
+          </table>
 
-        <tr>
-          <td>
-            <div className="cart-info-container">
-              <img src="https://media.greg.app/cGxhbnQtZGItcGhvdG9zL21vbnN0ZXJhXy5qcGc=?format=pjpeg&optimize=high&auto=webp&precrop=1000:1000,smart&fit=crop&width=1000&height=1000" />
-              <div className="cart-item-description">
-                <h3>Monstera</h3>
-                <small>Price 300</small>
-                <div className="cart-button-div">
-                  <button className="button-primary-cartlist">
-                    To Wishlist
-                  </button>
+          <div className="total-price-div">
+            <table>
+              <tfoot>
+                <tr>
+                  <td>SubTotal</td>
+                  <td>Rs:{cartTotal}</td>
+                </tr>
+                <tr>
+                  <td>Tax</td>
+                  <td>Rs:{Math.trunc(0.18 * cartTotal)}</td>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td>Rs:{Math.trunc(0.18 * cartTotal + cartTotal)}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
 
-                  <button className="button-secondary-cartlist">Remove</button>
-                </div>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div className="quantity-container">
-              <button>+</button>
-              <span>1</span>
-              <button>-</button>
-            </div>
-          </td>
-          <td>Rs.1200</td>
-        </tr>
-        {/*  */}
-      </table>
-
-      <div className="total-price-div">
-        <table>
-          <tr>
-            <td>SubTotal</td>
-            <td>Rs:44</td>
-          </tr>
-          <tr>
-            <td>Tax</td>
-            <td>Rs:150</td>
-          </tr>
-          <tr>
-            <td>Total</td>
-            <td>Rs:1500</td>
-          </tr>
-        </table>
-      </div>
-
-      <div className="confirm-button-container">
-        <button className="button-primary-cartlist mg-top">Confirm</button>
-      </div>
-    </div>
+          <div className="confirm-button-container">
+            <button className="button-primary-cartlist mg-top">Confirm</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };

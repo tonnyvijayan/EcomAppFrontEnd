@@ -9,7 +9,10 @@ export const TopNavBar = () => {
   return (
     <div className="Top-Nav-Bar-Container">
       <div className="brand-logo-container">
-        <img src={brandLogo} alt="brand-logp" />
+        <Link to="/">
+          <img src={brandLogo} alt="brand-logo" className="brand-logo" />
+        </Link>
+
         <strong>PlantMart</strong>
       </div>
 
