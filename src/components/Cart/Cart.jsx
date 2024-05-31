@@ -3,20 +3,48 @@ import "./Cart.css";
 import { EmptyCart } from "./EmptyCart";
 //
 export const Cart = () => {
-  const { state } = useProductContext();
+  const { state, dispatch } = useProductContext();
 
   const productsInCart = state.cartItems.map((item) => {
     const [productDetails] = state.products.filter((product) => {
       return product._id === item._id;
     });
-    console.log(productDetails);
+
     return { ...item, _id: productDetails };
   });
-  const cartTotal = productsInCart.reduce(
-    (total, item) => total + item._id.price,
-    0
-  );
-  console.log(productsInCart.length);
+
+  const cartTotal = productsInCart.reduce((total, item) => {
+    return total + item._id.price * item.quantity;
+  }, 0);
+
+  const removeFromCartHandler = (_id) => {
+    const updatedCart = state.cartItems.filter((item) => item._id !== _id);
+
+    dispatch({
+      type: "REMOVE-FROM-CART",
+      payload: updatedCart,
+    });
+  };
+
+  const increacseItemQuantityHandler = (_id) => {
+    const updatedCart = state.cartItems.map((item) => {
+      return item._id === _id ? { ...item, quantity: item.quantity + 1 } : item;
+    });
+
+    dispatch({ type: "INCREASE-CART-ITEM-QUANTITY", payload: updatedCart });
+  };
+
+  const decreacseItemQuantityHandler = (_id) => {
+    const updatedCart = state.cartItems.map((item) => {
+      return item._id === _id && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item;
+    });
+
+    // console.log(updatedCart);
+    dispatch({ type: "DECREASE-CART-ITEM-QUANTITY", payload: updatedCart });
+  };
+
   return (
     <>
       {productsInCart.length === 0 ? (
@@ -49,7 +77,10 @@ export const Cart = () => {
                                 To Wishlist
                               </button>
 
-                              <button className="button-secondary-cartlist">
+                              <button
+                                onClick={() => removeFromCartHandler(_id)}
+                                className="button-secondary-cartlist"
+                              >
                                 Remove
                               </button>
                             </div>
@@ -58,9 +89,17 @@ export const Cart = () => {
                       </td>
                       <td>
                         <div className="quantity-container">
-                          <button>+</button>
+                          <button
+                            onClick={() => increacseItemQuantityHandler(_id)}
+                          >
+                            +
+                          </button>
                           <span>{item.quantity}</span>
-                          <button>-</button>
+                          <button
+                            onClick={() => decreacseItemQuantityHandler(_id)}
+                          >
+                            -
+                          </button>
                         </div>
                       </td>
                       <td>Rs.{item.quantity * price}</td>

@@ -13,6 +13,13 @@ const reducer = (state, action) => {
       return { ...state, products: action.payload };
     case "ADD-TO-CART":
       return { ...state, cartItems: [...state.cartItems, action.payload] };
+
+    case "REMOVE-FROM-CART":
+      return { ...state, cartItems: action.payload };
+    case "INCREASE-CART-ITEM-QUANTITY":
+      return { ...state, cartItems: action.payload };
+    case "DECREASE-CART-ITEM-QUANTITY":
+      return { ...state, cartItems: action.payload };
     default:
       break;
   }
