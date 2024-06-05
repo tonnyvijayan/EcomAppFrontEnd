@@ -2,9 +2,14 @@ import { useState } from "react";
 import "./SignUp.css";
 import { Link } from "react-router-dom";
 import axios from "../../axios/axios";
-//
+import { useNavigate } from "react-router-dom";
 export const SignUp = () => {
-  const [userCredentials, setUserCredentials] = useState({});
+  const navigate = useNavigate();
+  const [userCredentials, setUserCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [signupError, setSignupError] = useState({
     name: "",
     password: "",
@@ -25,6 +30,7 @@ export const SignUp = () => {
         });
         if (response.status === 201) {
           console.log("Account created");
+          navigate("/");
           //show toast
         }
         console.log(response);
@@ -38,6 +44,11 @@ export const SignUp = () => {
           name: "Please enter username",
           password: "Please enter a password",
           email: "Please enter an email",
+        });
+        setUserCredentials({
+          name: "",
+          email: "",
+          password: "",
         });
       }
     } catch (error) {
@@ -58,38 +69,43 @@ export const SignUp = () => {
 
   return (
     <>
-      <div className="signup-container">
-        <div className="signup-header-container">Plant Mart</div>
-        <div className="signup-input-container">
-          <input
-            onChange={inputChangeHandler}
-            type="text"
-            placeholder="Username"
-            name="name"
-          />
-          <span>{signupError?.name}</span>
-          <input
-            onChange={inputChangeHandler}
-            type="email"
-            placeholder="Email"
-            name="email"
-          />
-          <span>{signupError?.email}</span>
+      <div className="signup-page-container ">
+        <div className="signup-container">
+          <div className="signup-header-container">Plant Mart</div>
+          <div className="signup-input-container">
+            <input
+              onChange={inputChangeHandler}
+              type="text"
+              placeholder="Username"
+              name="name"
+              value={userCredentials?.name}
+            />
+            <span>{signupError?.name}</span>
+            <input
+              onChange={inputChangeHandler}
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={userCredentials?.email}
+            />
+            <span>{signupError?.email}</span>
 
-          <input
-            onChange={inputChangeHandler}
-            type="password"
-            placeholder="Password"
-            name="password"
-          />
-          <span>{signupError?.password}</span>
-        </div>
+            <input
+              onChange={inputChangeHandler}
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={userCredentials?.password}
+            />
+            <span>{signupError?.password}</span>
+          </div>
 
-        <div className="signup-button-container">
-          <button onClick={singUpButtonHandler}>Sign Up</button>
-          {/* <button>Sign Up</button> */}
+          <div className="signup-button-container">
+            <button onClick={singUpButtonHandler}>Sign Up</button>
+            {/* <button>Sign Up</button> */}
+          </div>
+          <Link to="/login">Go to log in</Link>
         </div>
-        <Link to="/login">Go to log in</Link>
       </div>
     </>
   );

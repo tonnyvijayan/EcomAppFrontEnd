@@ -4,8 +4,12 @@ import wishlist from "./assets/wishlist.svg";
 import cart from "./assets/cart.svg";
 import user from "./assets/user.svg";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { useProductContext } from "../../hooks/useProductContext";
 
 export const TopNavBar = () => {
+  const { authState } = useAuth();
+  const { state } = useProductContext();
   return (
     <div className="Top-Nav-Bar-Container">
       <div className="brand-logo-container">
@@ -15,6 +19,8 @@ export const TopNavBar = () => {
 
         <strong>PlantMart</strong>
       </div>
+      {/* {JSON.stringify(authState)} */}
+      {JSON.stringify(state.wishlistItems)}
 
       <div className="user-detail-container">
         <Link to="/cart">

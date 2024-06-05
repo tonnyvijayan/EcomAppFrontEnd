@@ -1,21 +1,80 @@
-import { useProductContext } from "../../hooks/useProductContext";
 import "./ProductCard.css";
+import axios from "../../axios/axios";
+import { useAuth } from "../../hooks/useAuth";
+import { useProductContext } from "../../hooks/useProductContext";
+import { useNavigate } from "react-router-dom";
 
-export const ProductCard = ({ productId, title, price, imageUrl, rating }) => {
+export const ProductCard = ({ _id, title, price, imageUrl, rating }) => {
   const { state, dispatch } = useProductContext();
+  const { authState } = useAuth();
+  const navigate = useNavigate();
 
   const itemsInCart = state.cartItems.map((item) => item._id);
-  const addToCartHandler = (productId) => {
+  const itemInWishlist = state.wishlistItems.map((item) => item);
+
+  const addToWishlistHandler = async (_id) => {
+    console.log(_id);
+    if (authState) {
+      try {
+        const response = await axios.post("/user/addtowishlist", {
+          productId: _id,
+        });
+        if (response.status === 201) {
+          const updatedWishlist = [...state.wishlistItems, _id];
+          console.log("from add to wishlist", updatedWishlist);
+          dispatch({ type: "ADD-TO-WISHLIST", payload: updatedWishlist });
+        }
+      } catch (error) {
+        console.log("Unable to add item to wishlist");
+      }
+    } else {
+      navigate("/wishlist");
+      //show toast to login to add to wishlist
+    }
+  };
+
+  const addToCartHandler = async (_id) => {
     dispatch({
       type: "ADD-TO-CART",
-      payload: { _id: productId, quantity: 1 },
+      payload: { _id: _id, quantity: 1 },
     });
-    console.log(productId);
+    if (authState) {
+      try {
+        const response = await axios.post("/user/addtocart", {
+          productId: _id,
+        });
+        if (response.status === 201) {
+          console.log("Item added to cart");
+        } else {
+          console.log("Item already exists in cart");
+        }
+      } catch (error) {
+        console.log("Unable to add product to cart");
+      }
+    }
+  };
+
+  const removeFromWishlistHandler = async (_id) => {
+    try {
+      const response = await axios.post("/user/removefromwishlist", {
+        productId: _id,
+      });
+      console.log(response);
+      if (response.status === 200) {
+        const updatedWishlist = state.wishlistItems.filter((item) => {
+          return item !== _id;
+        });
+        console.log("remove from wishlist", updatedWishlist);
+        dispatch({ type: "REMOVE-FROM-WISHLIST", payload: updatedWishlist });
+      }
+    } catch (error) {
+      console.log("unable to remove product from wishlist");
+    }
   };
   //
   return (
     <>
-      <div className="card">
+      <div className="card" key={_id}>
         <a to={`/productdetail/`}>
           <img className="card-image-responsive" src={imageUrl} alt="image" />
         </a>
@@ -28,21 +87,41 @@ export const ProductCard = ({ productId, title, price, imageUrl, rating }) => {
         <div className="card-rating">
           <span className="rating-badge">{rating} ★</span>
         </div>
-        <span className="material-icons  like-location">favorite_border</span>
+
+        {state.wishlistItems?.includes(_id) ? (
+          <span
+            className="material-icons  like-location"
+            onClick={() => {
+              removeFromWishlistHandler(_id);
+            }}
+          >
+            favorite
+          </span>
+        ) : (
+          <span
+            className="material-icons  like-location"
+            onClick={() => {
+              addToWishlistHandler(_id);
+            }}
+          >
+            favorite_border
+          </span>
+        )}
+
         <div className="product-detail-bottom-container">
           <span>Fast Delivery</span>
           <span>In Stock</span>
         </div>
         {/*  */}
         <div className="card-button-container">
-          {itemsInCart.includes(productId) ? (
+          {itemsInCart.includes(_id) ? (
             <button className="card-button-secondary" disabled={true}>
               Item in Cart
             </button>
           ) : (
             <button
               onClick={() => {
-                addToCartHandler(productId);
+                addToCartHandler(_id);
               }}
               className="card-button-primary"
             >
