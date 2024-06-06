@@ -2,12 +2,14 @@ import "./Wishlist.css";
 import { EmptyWishlist } from "./EmptyWishlist";
 import { useAuth } from "../../hooks/useAuth";
 import { useEffect } from "react";
-import axios from "../../axios/axios";
+// import axios from "../../axios/axios";
+import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 import { useProductContext } from "../../hooks/useProductContext";
 
 export const Wishlist = () => {
   const { authState } = useAuth();
   const { state, dispatch } = useProductContext();
+  const axiosPrivate = useAxiosPrivate();
   const productsInCart = state.cartItems.map((item) => {
     return item._id;
   });
@@ -20,7 +22,7 @@ export const Wishlist = () => {
 
   const removeFromWishlistHanlder = async (_id) => {
     try {
-      const response = await axios.post("/user/removefromwishlist", {
+      const response = await axiosPrivate.post("/user/removefromwishlist", {
         productId: _id,
       });
       console.log(response);
@@ -39,10 +41,10 @@ export const Wishlist = () => {
   const moveToCartHandler = async (_id) => {
     if (authState) {
       try {
-        const addToCartResponse = await axios.post("/user/addtocart", {
+        const addToCartResponse = await axiosPrivate.post("/user/addtocart", {
           productId: _id,
         });
-        const removeFromWishlistResponse = await axios.post(
+        const removeFromWishlistResponse = await axiosPrivate.post(
           "/user/removefromwishlist",
           {
             productId: _id,
@@ -76,7 +78,7 @@ export const Wishlist = () => {
   useEffect(() => {
     console.log("wishlist useeffect");
     const fetchAndUpdateUserWishlist = async () => {
-      const response = await axios.get("/user/fetchwishlist");
+      const response = await axiosPrivate.get("/user/fetchwishlist");
       console.log(response);
       if (response.status === 200) {
         dispatch({

@@ -1,6 +1,6 @@
 import "./Cart.css";
-import axios from "../../axios/axios";
-
+// import axios from "../../axios/axios";
+import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 import { useProductContext } from "../../hooks/useProductContext";
 import { EmptyCart } from "./EmptyCart";
 import { useAuth } from "../../hooks/useAuth";
@@ -10,6 +10,7 @@ export const Cart = () => {
   const { state, dispatch } = useProductContext();
   const { authState } = useAuth();
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
   const productsInCart = state.cartItems.map((item) => {
     const [productDetails] = state.products.filter((product) => {
@@ -33,7 +34,7 @@ export const Cart = () => {
 
     if (authState) {
       try {
-        const response = await axios.post("/user/removefromcart", {
+        const response = await axiosPrivate.post("/user/removefromcart", {
           productId: _id,
         });
         if (response.status === 200) {
@@ -54,7 +55,7 @@ export const Cart = () => {
 
     if (authState) {
       try {
-        const response = await axios.post("/user/increaseitemquantity", {
+        const response = await axiosPrivate.post("/user/increaseitemquantity", {
           productId: _id,
         });
         if (response.status === 201) {
@@ -76,7 +77,7 @@ export const Cart = () => {
     dispatch({ type: "DECREASE-CART-ITEM-QUANTITY", payload: updatedCart });
     if (authState) {
       try {
-        const response = await axios.post("/user/decreaseitemquantity", {
+        const response = await axiosPrivate.post("/user/decreaseitemquantity", {
           productId: _id,
         });
         if (response.status === 201) {
@@ -91,10 +92,13 @@ export const Cart = () => {
   const moveToWishlistHandler = async (_id) => {
     if (authState) {
       try {
-        const moveToWishlistResponse = await axios.post("/user/addtowishlist", {
-          productId: _id,
-        });
-        const removeFromCartResponse = await axios.post(
+        const moveToWishlistResponse = await axiosPrivate.post(
+          "/user/addtowishlist",
+          {
+            productId: _id,
+          }
+        );
+        const removeFromCartResponse = await axiosPrivate.post(
           "/user/removefromcart",
           {
             productId: _id,
@@ -165,14 +169,33 @@ export const Cart = () => {
                           <h3>{name}</h3>
                           <small>Price {price}</small>
                           <div className="cart-button-div">
-                            <button
+                            {state.wishlistItems.includes(_id) ? (
+                              <button
+                                className="button-primary-cartlist"
+                                style={{ cursor: "not-allowed" }}
+                                disabled={true}
+                              >
+                                In Wishlist
+                              </button>
+                            ) : (
+                              <button
+                                className="button-primary-cartlist"
+                                onClick={() => {
+                                  moveToWishlistHandler(_id);
+                                }}
+                              >
+                                To Wishlist
+                              </button>
+                            )}
+
+                            {/* <button
                               className="button-primary-cartlist"
                               onClick={() => {
                                 moveToWishlistHandler(_id);
                               }}
                             >
                               To Wishlist
-                            </button>
+                            </button> */}
 
                             <button
                               onClick={() => removeFromCartHandler(_id)}

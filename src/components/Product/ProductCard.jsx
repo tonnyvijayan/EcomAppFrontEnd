@@ -1,22 +1,45 @@
 import "./ProductCard.css";
-import axios from "../../axios/axios";
+
 import { useAuth } from "../../hooks/useAuth";
 import { useProductContext } from "../../hooks/useProductContext";
 import { useNavigate } from "react-router-dom";
+import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 
 export const ProductCard = ({ _id, title, price, imageUrl, rating }) => {
   const { state, dispatch } = useProductContext();
   const { authState } = useAuth();
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
   const itemsInCart = state.cartItems.map((item) => item._id);
-  const itemInWishlist = state.wishlistItems.map((item) => item);
+  // const itemInWishlist = state.wishlistItems.map((item) => item);
+
+  const addToCartHandler = async (_id) => {
+    dispatch({
+      type: "ADD-TO-CART",
+      payload: { _id: _id, quantity: 1 },
+    });
+    if (authState) {
+      try {
+        const response = await axiosPrivate.post("/user/addtocart", {
+          productId: _id,
+        });
+        if (response.status === 201) {
+          console.log("Item added to cart");
+        } else {
+          console.log("Item already exists in cart");
+        }
+      } catch (error) {
+        console.log("Unable to add product to cart");
+      }
+    }
+  };
 
   const addToWishlistHandler = async (_id) => {
     console.log(_id);
     if (authState) {
       try {
-        const response = await axios.post("/user/addtowishlist", {
+        const response = await axiosPrivate.post("/user/addtowishlist", {
           productId: _id,
         });
         if (response.status === 201) {
@@ -33,30 +56,9 @@ export const ProductCard = ({ _id, title, price, imageUrl, rating }) => {
     }
   };
 
-  const addToCartHandler = async (_id) => {
-    dispatch({
-      type: "ADD-TO-CART",
-      payload: { _id: _id, quantity: 1 },
-    });
-    if (authState) {
-      try {
-        const response = await axios.post("/user/addtocart", {
-          productId: _id,
-        });
-        if (response.status === 201) {
-          console.log("Item added to cart");
-        } else {
-          console.log("Item already exists in cart");
-        }
-      } catch (error) {
-        console.log("Unable to add product to cart");
-      }
-    }
-  };
-
   const removeFromWishlistHandler = async (_id) => {
     try {
-      const response = await axios.post("/user/removefromwishlist", {
+      const response = await axiosPrivate.post("/user/removefromwishlist", {
         productId: _id,
       });
       console.log(response);
@@ -73,63 +75,61 @@ export const ProductCard = ({ _id, title, price, imageUrl, rating }) => {
   };
   //
   return (
-    <>
-      <div className="card" key={_id}>
-        <a to={`/productdetail/`}>
-          <img className="card-image-responsive" src={imageUrl} alt="image" />
-        </a>
-        <h3 className="card-heading">{title}</h3>
-        <div className="card-pricing">
-          <span className="card-product-currentprice">Rs:222</span>
-          <span className="card-product-originalprice">{price}</span>
-          <span className="card-prodcut-discount">60% Off</span>
-        </div>
-        <div className="card-rating">
-          <span className="rating-badge">{rating} ★</span>
-        </div>
-
-        {state.wishlistItems?.includes(_id) ? (
-          <span
-            className="material-icons  like-location"
-            onClick={() => {
-              removeFromWishlistHandler(_id);
-            }}
-          >
-            favorite
-          </span>
-        ) : (
-          <span
-            className="material-icons  like-location"
-            onClick={() => {
-              addToWishlistHandler(_id);
-            }}
-          >
-            favorite_border
-          </span>
-        )}
-
-        <div className="product-detail-bottom-container">
-          <span>Fast Delivery</span>
-          <span>In Stock</span>
-        </div>
-        {/*  */}
-        <div className="card-button-container">
-          {itemsInCart.includes(_id) ? (
-            <button className="card-button-secondary" disabled={true}>
-              Item in Cart
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                addToCartHandler(_id);
-              }}
-              className="card-button-primary"
-            >
-              Add to Cart
-            </button>
-          )}
-        </div>
+    <div className="card" key={_id}>
+      <a to={`/productdetail/`}>
+        <img className="card-image-responsive" src={imageUrl} alt="image" />
+      </a>
+      <h3 className="card-heading">{title}</h3>
+      <div className="card-pricing">
+        <span className="card-product-currentprice">Rs:222</span>
+        <span className="card-product-originalprice">{price}</span>
+        <span className="card-prodcut-discount">60% Off</span>
       </div>
-    </>
+      <div className="card-rating">
+        <span className="rating-badge">{rating} ★</span>
+      </div>
+
+      {state.wishlistItems?.includes(_id) ? (
+        <span
+          className="material-icons  like-location"
+          onClick={() => {
+            removeFromWishlistHandler(_id);
+          }}
+        >
+          favorite
+        </span>
+      ) : (
+        <span
+          className="material-icons  like-location"
+          onClick={() => {
+            addToWishlistHandler(_id);
+          }}
+        >
+          favorite_border
+        </span>
+      )}
+
+      <div className="product-detail-bottom-container">
+        <span>Fast Delivery</span>
+        <span>In Stock</span>
+      </div>
+      {/*  */}
+      <div className="card-button-container">
+        {itemsInCart.includes(_id) ? (
+          <button className="card-button-secondary" disabled={true}>
+            Item in Cart
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              addToCartHandler(_id);
+            }}
+            className="card-button-primary"
+          >
+            Add to Cart
+          </button>
+        )}
+      </div>
+    </div>
   );
 };

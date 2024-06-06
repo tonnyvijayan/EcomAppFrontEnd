@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import "./Login.css";
-import axios from "../../axios/axios";
+// import axios from "../../axios/axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useProductContext } from "../../hooks/useProductContext";
+import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 
 export const Login = () => {
   const { state, dispatch } = useProductContext();
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
   const [userCredentials, setUserCredentials] = useState({
     name: "",
     password: "",
@@ -25,7 +27,7 @@ export const Login = () => {
     console.log("location from login", location);
     try {
       if (userCredentials.name && userCredentials.password) {
-        const response = await axios.post(
+        const response = await axiosPrivate.post(
           "/user/authenticateuser",
           {
             name: userCredentials.name,
@@ -70,7 +72,7 @@ export const Login = () => {
     if (authState) {
       console.log("useEffect fired after authState set");
       const mergeCartAndUpdate = async () => {
-        const mergeCart = await axios.post("/user/mergecart", {
+        const mergeCart = await axiosPrivate.post("/user/mergecart", {
           clientCartItems: state.cartItems,
         });
         console.log("mergecart", mergeCart);

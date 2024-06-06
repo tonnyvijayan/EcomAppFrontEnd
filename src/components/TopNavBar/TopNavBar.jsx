@@ -5,11 +5,21 @@ import cart from "./assets/cart.svg";
 import user from "./assets/user.svg";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { useProductContext } from "../../hooks/useProductContext";
 
 export const TopNavBar = () => {
   const { authState } = useAuth();
-  const { state } = useProductContext();
+
+  // const axiosPrivate = useAxiosPrivate();
+
+  // const refreshCheckButtonHanlder = async () => {
+  //   console.log("button clicked");
+  //   try {
+  //     const response = await axiosPrivate.get("/user/checkrefresh");
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <div className="Top-Nav-Bar-Container">
       <div className="brand-logo-container">
@@ -19,9 +29,10 @@ export const TopNavBar = () => {
 
         <strong>PlantMart</strong>
       </div>
-      {/* {JSON.stringify(authState)} */}
-      {JSON.stringify(state.wishlistItems)}
+      {JSON.stringify(authState)}
+      {/* {JSON.stringify(state.wishlistItems)} */}
 
+      {/*  */}
       <div className="user-detail-container">
         <Link to="/cart">
           <img src={cart} alt="brand-logo" className="brand-logo" />
