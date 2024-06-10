@@ -1,9 +1,13 @@
 import "./SideNavBar.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 export const SideNavBar = () => {
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const sortHandler = (sortType) => {
+    setSearchParams({ sort: sortType });
+  };
   return (
     <>
       <div className="side-nav-bar-container">
@@ -20,11 +24,25 @@ export const SideNavBar = () => {
               <fieldset>
                 <legend>Sort By</legend>
                 <div>
-                  <input type="radio" id="LOW-TO-HIGH" name="sorting" />
+                  <input
+                    type="radio"
+                    id="LOW-TO-HIGH"
+                    name="sorting"
+                    onClick={() => {
+                      sortHandler("LOW-TO-HIGH");
+                    }}
+                  />
                   <label htmlFor="LOW-TO-HIGH">Low To High</label>
                 </div>
                 <div>
-                  <input type="radio" id="HIGH-TO-LOW" name="sorting" />
+                  <input
+                    type="radio"
+                    id="HIGH-TO-LOW"
+                    name="sorting"
+                    onClick={() => {
+                      sortHandler("HIGH-TO-LOW");
+                    }}
+                  />
                   <label htmlFor="HIGH-TO-LOW">High To Low</label>
                 </div>
               </fieldset>

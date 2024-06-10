@@ -1,4 +1,3 @@
-// import axios from "../axios/axios";
 import { axiosPrivate } from "../axios/axios";
 import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router-dom";

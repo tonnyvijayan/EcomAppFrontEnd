@@ -114,7 +114,9 @@ export const Wishlist = () => {
 
                 <h3 className="card-heading">{name}</h3>
                 <div className="card-pricing">
-                  <span className="card-product-currentprice">Rs:222</span>
+                  <span className="card-product-currentprice">
+                    Rs:{Math.trunc(price - price * (maxDiscount / 100))}
+                  </span>
                   <span className="card-product-originalprice">Rs:{price}</span>
                   <span className="card-prodcut-discount">
                     {maxDiscount}% Off

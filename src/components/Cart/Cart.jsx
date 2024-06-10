@@ -159,7 +159,7 @@ export const Cart = () => {
 
             <tbody>
               {productsInCart.map((item) => {
-                const { _id, name, price, imageUrl } = item._id;
+                const { _id, name, price, imageUrl, maxDiscount } = item._id;
                 return (
                   <tr key={_id}>
                     <td>
@@ -167,7 +167,12 @@ export const Cart = () => {
                         <img src={imageUrl} />
                         <div className="cart-item-description">
                           <h3>{name}</h3>
-                          <small>Price {price}</small>
+                          <small>
+                            Price
+                            {`${Math.trunc(
+                              price - price * (maxDiscount / 100)
+                            )}`}
+                          </small>
                           <div className="cart-button-div">
                             {state.wishlistItems.includes(_id) ? (
                               <button
@@ -222,7 +227,11 @@ export const Cart = () => {
                         </button>
                       </div>
                     </td>
-                    <td>Rs.{item.quantity * price}</td>
+                    <td>
+                      Rs.
+                      {item.quantity *
+                        Math.trunc(price - price * (maxDiscount / 100))}
+                    </td>
                   </tr>
                 );
               })}

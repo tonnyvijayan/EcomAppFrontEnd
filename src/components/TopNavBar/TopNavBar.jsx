@@ -31,7 +31,7 @@ export const TopNavBar = () => {
         <strong>PlantMart</strong>
       </div>
       {/* {JSON.stringify(authState)} */}
-      {/* {JSON.stringify(state.wishlistItems)} */}
+      {/* {JSON.stringify(state.products)} */}
 
       {/*  */}
       <div className="user-detail-container">

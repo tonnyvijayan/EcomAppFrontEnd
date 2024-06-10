@@ -5,7 +5,14 @@ import { useProductContext } from "../../hooks/useProductContext";
 import { useNavigate } from "react-router-dom";
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 
-export const ProductCard = ({ _id, title, price, imageUrl, rating }) => {
+export const ProductCard = ({
+  _id,
+  title,
+  price,
+  imageUrl,
+  rating,
+  discount,
+}) => {
   const { state, dispatch } = useProductContext();
   const { authState } = useAuth();
   const navigate = useNavigate();
@@ -81,14 +88,16 @@ export const ProductCard = ({ _id, title, price, imageUrl, rating }) => {
       </a>
       <h3 className="card-heading">{title}</h3>
       <div className="card-pricing">
-        <span className="card-product-currentprice">Rs:222</span>
+        <span className="card-product-currentprice">
+          Rs:{`${Math.trunc(price - price * (discount / 100))}`}
+        </span>
         <span className="card-product-originalprice">{price}</span>
-        <span className="card-prodcut-discount">60% Off</span>
+        <span className="card-prodcut-discount">{discount}% Off</span>
       </div>
       <div className="card-rating">
         <span className="rating-badge">{rating} ★</span>
       </div>
-
+      {/*  */}
       {state.wishlistItems?.includes(_id) ? (
         <span
           className="material-icons  like-location"
