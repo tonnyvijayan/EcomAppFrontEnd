@@ -1,5 +1,5 @@
 import "./ProductCard.css";
-
+import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useProductContext } from "../../hooks/useProductContext";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,8 @@ export const ProductCard = ({
   imageUrl,
   rating,
   discount,
+  inStock,
+  deliveryTime,
 }) => {
   const { state, dispatch } = useProductContext();
   const { authState } = useAuth();
@@ -19,7 +21,6 @@ export const ProductCard = ({
   const axiosPrivate = useAxiosPrivate();
 
   const itemsInCart = state.cartItems.map((item) => item._id);
-  // const itemInWishlist = state.wishlistItems.map((item) => item);
 
   const addToCartHandler = async (_id) => {
     dispatch({
@@ -83,9 +84,9 @@ export const ProductCard = ({
   //
   return (
     <div className="card" key={_id}>
-      <a to={`/productdetail/`}>
+      <Link to={`/${_id}`}>
         <img className="card-image-responsive" src={imageUrl} alt="image" />
-      </a>
+      </Link>
       <h3 className="card-heading">{title}</h3>
       <div className="card-pricing">
         <span className="card-product-currentprice">
@@ -119,8 +120,12 @@ export const ProductCard = ({
       )}
 
       <div className="product-detail-bottom-container">
-        <span>Fast Delivery</span>
-        <span>In Stock</span>
+        {deliveryTime === "standard" ? (
+          <span>Standard Delivery</span>
+        ) : (
+          <span>Fast Delivery</span>
+        )}
+        {inStock ? <span>In Stock</span> : <span>Out of Stock</span>}
       </div>
       {/*  */}
       <div className="card-button-container">

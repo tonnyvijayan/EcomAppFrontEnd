@@ -38,8 +38,8 @@
   border-radius: 15px;
   margin: 10px;
   width: 300px;
-  max-width: 100%;
-  /* justify-content: space-evenly; */
+
+  height: fit-content;
 }
 .card:hover {
   box-shadow: 2px 2px 8px #fff;

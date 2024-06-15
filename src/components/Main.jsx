@@ -2,6 +2,7 @@ import "./Main.css";
 //
 import { Routes, Route } from "react-router-dom";
 import { ProductListing } from "./Product/ProductListing";
+import { ProductDetail } from "./Product/ProductDetail";
 import { Login } from "./Login/Login";
 import { Cart } from "./Cart/Cart";
 import { SignUp } from "./Signup/SignUp";
@@ -14,6 +15,7 @@ export const Main = () => {
       <div className="main-container">
         <Routes>
           <Route path="/" element={<ProductListing />} />
+          <Route path="/:productId" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/signup" element={<SignUp />} />
@@ -21,7 +23,6 @@ export const Main = () => {
           <Route element={<PrivateRoute />}>
             <Route path="/wishlist" element={<Wishlist />} />
           </Route>
-          {/* <Route path="" element={<ProductListing />} /> */}
         </Routes>
       </div>
     </>

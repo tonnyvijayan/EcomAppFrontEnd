@@ -14,12 +14,16 @@ const reducer = (state, action) => {
 
     case "ADD-TO-CART":
       return { ...state, cartItems: [...state.cartItems, action.payload] };
+
     case "REMOVE-FROM-CART":
       return { ...state, cartItems: action.payload };
+
     case "INCREASE-CART-ITEM-QUANTITY":
       return { ...state, cartItems: action.payload };
+
     case "DECREASE-CART-ITEM-QUANTITY":
       return { ...state, cartItems: action.payload };
+
     case "MERGE-LOCAL-CART-AND-DB-CART-ITEMS":
       return { ...state, cartItems: action.payload };
 
@@ -38,7 +42,7 @@ const reducer = (state, action) => {
 };
 
 export const ProductContext = createContext();
-//
+
 export const ProductContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -50,7 +54,7 @@ export const ProductContextProvider = ({ children }) => {
         const productData = await axios.get("products/fetchproducts", {
           signal: controller.signal,
         });
-        console.log(productData.data.products);
+        console.log("fetching products", productData.data.products);
         isMounted &&
           dispatch({
             type: "UPDATE-LOCAL-PRODUCT-STATE-FROM-SERVER",

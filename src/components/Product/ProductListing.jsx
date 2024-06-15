@@ -6,9 +6,6 @@ import { useSearchParams } from "react-router-dom";
 export const ProductListing = () => {
   const { state } = useProductContext();
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams);
-
-  console.log("before sorting", state.products);
 
   const sortAndFilterProducts = () => {
     if (
@@ -38,16 +35,40 @@ export const ProductListing = () => {
     }
   };
 
-  const sortedAndFilteredProducts = sortAndFilterProducts();
+  const sortedAndFilteredProducts = sortAndFilterProducts()
+    .filter((item) => {
+      return searchParams.getAll("inStock").length > 0 &&
+        searchParams.getAll("inStock")[0] === "true"
+        ? item.inStock === true
+        : item;
+    })
+    .filter((item) => {
+      return searchParams.getAll("fastDelivery").length > 0 &&
+        searchParams.getAll("fastDelivery")[0] === "true"
+        ? item.deliveryTime === "fast"
+        : item;
+    })
+    .filter((item) => {
+      return searchParams.getAll("new").length > 0 &&
+        searchParams.getAll("new")[0] === "true"
+        ? item.new === true
+        : item;
+    });
 
-  console.log("after sorting", state.products);
-
-  console.log({ sortedAndFilteredProducts });
   return (
     <div className="productlisting-container">
       {/* {JSON.stringify(searchParams.getAll("sort"))} */}
       {sortedAndFilteredProducts?.map((item) => {
-        const { _id, name, price, imageUrl, rating, maxDiscount } = item;
+        const {
+          _id,
+          name,
+          price,
+          imageUrl,
+          rating,
+          maxDiscount,
+          inStock,
+          deliveryTime,
+        } = item;
         return (
           <ProductCard
             _id={_id}
@@ -57,6 +78,8 @@ export const ProductListing = () => {
             imageUrl={imageUrl}
             rating={rating}
             discount={maxDiscount}
+            inStock={inStock}
+            deliveryTime={deliveryTime}
           />
         );
       })}
