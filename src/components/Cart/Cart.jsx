@@ -128,20 +128,6 @@ export const Cart = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("cart use effect");
-  //   const fetchCartItems = async () => {
-  //     const cartData = await axios.get("/user/fetchcart");
-
-  //     console.log(cartData);
-  //   };
-
-  //   if (authState) {
-  //     console.log("fetching cart items");
-  //     fetchCartItems();
-  //   }
-  // }, [authState]);
-
   return (
     <>
       {productsInCart.length === 0 ? (

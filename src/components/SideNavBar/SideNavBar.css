@@ -66,6 +66,13 @@
   margin-left: 4px;
 }
 
+.reset-button {
+  padding: 0.5rem 2rem;
+  font-weight: bolder;
+  background-color: #fff;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .side-nav-bar-container {
     display: none;

@@ -121,6 +121,14 @@ export const SideNavBar = () => {
                 </div>
               </fieldset>
             </div>
+            <button
+              className="reset-button"
+              onClick={() => {
+                setSearchParams({});
+              }}
+            >
+              Reset
+            </button>
           </div>
         ) : null}
       </div>

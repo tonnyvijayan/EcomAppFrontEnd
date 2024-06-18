@@ -44,6 +44,7 @@
   margin-right: 5px;
   width: 60px;
   padding: 0.1rem;
+  cursor: pointer;
 }
 
 /* with media queries */
@@ -112,9 +113,51 @@
   height: 19px;
   border-radius: 50%;
 }
+.logout-button {
+  color: #fff;
+  background-color: #1e453e;
+  outline: none;
+  font-weight: bolder;
+  border: none;
+  cursor: pointer;
+}
+
+.fieldsetDivContainerTopNav {
+  width: 100%;
+}
+
+.fieldsetDivContainerTopNav div {
+  background-color: white;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.fieldsetDivContainerTopNav label {
+  margin-left: 4px;
+  color: #1e453e;
+}
+
+.filter-categories-div {
+  display: none;
+}
+
+.topnav-reset {
+  padding: 0.4rem 0.8rem;
+  margin: 6px auto;
+  width: 80px;
+  border-radius: 2px;
+  font-weight: bold;
+  border: 2px solid #1e453e;
+  background-color: #fff;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .brand-logo {
     width: 50px;
     padding: 0.3rem;
+  }
+  .filter-categories-div {
+    display: block;
   }
 }

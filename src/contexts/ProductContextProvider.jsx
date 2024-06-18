@@ -36,6 +36,13 @@ const reducer = (state, action) => {
     case "REMOVE-FROM-WISHLIST":
       return { ...state, wishlistItems: action.payload };
 
+    case "USER-LOGOUT":
+      return {
+        ...state,
+        cartItems: action.payload,
+        wishlistItems: action.payload,
+      };
+
     default:
       break;
   }
