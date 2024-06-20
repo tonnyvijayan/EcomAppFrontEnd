@@ -4,7 +4,6 @@ import { useAuth } from "../../hooks/useAuth";
 export const PrivateRoute = () => {
   const { authState } = useAuth();
   const location = useLocation();
-  console.log(location);
 
   return (
     <>

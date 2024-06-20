@@ -95,3 +95,59 @@ td:last-child {
   justify-content: flex-end;
   padding: 0.5rem 1rem;
 }
+
+.cart-page-order-modal {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(30, 69, 62, 0.3);
+  z-index: 300;
+  pointer-events: none;
+}
+.show {
+  pointer-events: auto;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.modal-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.modal-detail button {
+  padding: 0.5rem 1.5rem;
+  margin: 1rem;
+  border: 2px solid #1e453e;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.cart-modal-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.modal-detail strong {
+  font-size: larger;
+}
+.modal-detail a {
+  text-decoration: none;
+  color: #1e453e;
+  font-weight: bolder;
+}

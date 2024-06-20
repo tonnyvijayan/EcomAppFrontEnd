@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import axios from "../axios/axios";
 
 const initialState = {
@@ -42,7 +42,8 @@ const reducer = (state, action) => {
         cartItems: action.payload,
         wishlistItems: action.payload,
       };
-
+    case "CLEAR-CART":
+      return { ...state, cartItems: action.payload };
     default:
       break;
   }
@@ -52,7 +53,13 @@ export const ProductContext = createContext();
 
 export const ProductContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const [loading, setLoading] = useState(true);
+  const [toastDetails, setToastDetails] = useState({
+    toastMessage: "",
+    active: false,
+    type: "",
+  });
+  //
   useEffect(() => {
     let isMounted = true;
     let controller = new AbortController();
@@ -67,6 +74,7 @@ export const ProductContextProvider = ({ children }) => {
             type: "UPDATE-LOCAL-PRODUCT-STATE-FROM-SERVER",
             payload: productData.data.products,
           });
+        setLoading(false);
       } catch (error) {
         if (!controller.signal.aborted) {
           console.log("Unable to fetch products", error.message);
@@ -83,7 +91,16 @@ export const ProductContextProvider = ({ children }) => {
 
   return (
     <>
-      <ProductContext.Provider value={{ state, dispatch }}>
+      <ProductContext.Provider
+        value={{
+          state,
+          dispatch,
+          toastDetails,
+          setToastDetails,
+          loading,
+          setLoading,
+        }}
+      >
         {children}
       </ProductContext.Provider>
     </>

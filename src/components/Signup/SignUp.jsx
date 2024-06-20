@@ -3,7 +3,9 @@ import "./SignUp.css";
 import { Link } from "react-router-dom";
 import axios from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../hooks/useToast";
 export const SignUp = () => {
+  const showToast = useToast();
   const navigate = useNavigate();
   const [userCredentials, setUserCredentials] = useState({
     name: "",
@@ -29,11 +31,10 @@ export const SignUp = () => {
           password: userCredentials.password,
         });
         if (response.status === 201) {
-          console.log("Account created");
           navigate("/");
-          //show toast
+          showToast("User Account Created", "success");
         }
-        console.log(response);
+
         setSignupError({
           name: "",
           password: "",
@@ -53,10 +54,10 @@ export const SignUp = () => {
       }
     } catch (error) {
       if (error.response.status === 409) {
-        console.log(error.response.data.message);
-        //add toast to let user know
+        showToast("User already exists", "fail");
+      } else {
+        showToast("Unable to create user account", "fail");
       }
-      console.log(error);
     }
   };
 

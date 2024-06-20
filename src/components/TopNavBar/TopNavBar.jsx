@@ -13,6 +13,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
 import { useProductContext } from "../../hooks/useProductContext";
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
+import { useToast } from "../../hooks/useToast";
 
 export const TopNavBar = () => {
   const { state, dispatch } = useProductContext();
@@ -20,17 +21,17 @@ export const TopNavBar = () => {
   const [toogleMenu, setToogleMenu] = useState(false);
   const [toogleCategories, setToogleCategories] = useState(false);
   const [toogleFilters, setToogleFilters] = useState(false);
+  const showToast = useToast();
 
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
-  /////////////////////////////////
+
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortHandler = (sortType) => {
     searchParams.set("sort", sortType);
     setSearchParams(searchParams);
-    // setSearchParams({ sort: sortType });
   };
 
   const filterHandler = (event) => {
@@ -63,12 +64,12 @@ export const TopNavBar = () => {
 
   const logOutHandler = async () => {
     try {
-      const response = await axiosPrivate.get("/user/logout");
+      await axiosPrivate.get("/user/logout");
       setAuthState("");
       dispatch({ type: "USER-LOGOUT", payload: [] });
       navigate("/");
       setToogleMenu((prev) => !prev);
-      console.log("user logged out");
+      showToast("Logged Out", "success");
     } catch (error) {
       console.log("unable to logout user");
     }
@@ -84,10 +85,7 @@ export const TopNavBar = () => {
 
         <strong>PlantMart</strong>
       </div>
-      {/* {JSON.stringify(authState)} */}
-      {/* {JSON.stringify(state.products)} */}
 
-      {/*  */}
       <div className="user-detail-container">
         <div className="icon-badge-container">
           {state.cartItems.length > 0 ? (

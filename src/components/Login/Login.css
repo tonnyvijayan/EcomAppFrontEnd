@@ -61,8 +61,6 @@ input:focus {
 }
 .login-button-container {
   margin-bottom: 5px;
-  /* justify-self: flex-end; */
-  /* justify-self: flex-end; */
 }
 
 .login-button-container button {

@@ -1,8 +1,6 @@
 import "./Wishlist.css";
 import { EmptyWishlist } from "./EmptyWishlist";
 import { useAuth } from "../../hooks/useAuth";
-import { useEffect } from "react";
-// import axios from "../../axios/axios";
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 import { useProductContext } from "../../hooks/useProductContext";
 
@@ -74,25 +72,6 @@ export const Wishlist = () => {
       }
     }
   };
-
-  useEffect(() => {
-    console.log("wishlist useeffect");
-    const fetchAndUpdateUserWishlist = async () => {
-      const response = await axiosPrivate.get("/user/fetchwishlist");
-      console.log(response);
-      if (response.status === 200) {
-        dispatch({
-          type: "UPDATE-USER-WISHLIST-FROM-SERVER",
-          payload: response.data.userWishlist,
-        });
-      }
-    };
-
-    if (authState) {
-      console.log("authchanged and calling fetchwishlist");
-      fetchAndUpdateUserWishlist();
-    }
-  }, [authState]);
 
   return (
     <>

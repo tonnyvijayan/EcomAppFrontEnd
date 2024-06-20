@@ -4,7 +4,8 @@
   display: flex;
   flex-wrap: wrap;
   height: 100%;
-  justify-content: center;
+  width: 100%;
+  /* justify-content: center; */
 }
 
 .product-detail-bottom-container {
@@ -109,4 +110,10 @@
   color: white;
   padding: 0.1rem;
   font-weight: bold;
+}
+
+@media screen and (max-width: 650px) {
+  .wishlist-container {
+    justify-content: center;
+  }
 }

@@ -1,4 +1,12 @@
-#root {
+:root {
+  --primary-color: #1e453e;
+  --secondary-color: #f0faf6;
+  --grey: #aaa;
+  --white: #fff;
+  --lightred: #fecaca;
+  --darkred: #b91c1c;
+  --lightgreen: #a7f3d0;
+  --darkgreen: #047857;
 }
 
 * {

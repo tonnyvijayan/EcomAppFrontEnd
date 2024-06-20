@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import "./Login.css";
-// import axios from "../../axios/axios";
+import axios from "../../axios/axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useProductContext } from "../../hooks/useProductContext";
+import { useToast } from "../../hooks/useToast";
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 
 export const Login = () => {
+  const axiosPrivate = useAxiosPrivate();
   const { state, dispatch } = useProductContext();
   const location = useLocation();
   const navigate = useNavigate();
-  const axiosPrivate = useAxiosPrivate();
+  const showToast = useToast();
   const [userCredentials, setUserCredentials] = useState({
     name: "",
     password: "",
@@ -27,7 +29,7 @@ export const Login = () => {
     console.log("location from login", location);
     try {
       if (userCredentials.name && userCredentials.password) {
-        const response = await axiosPrivate.post(
+        const response = await axios.post(
           "/user/authenticateuser",
           {
             name: userCredentials.name,
@@ -56,10 +58,15 @@ export const Login = () => {
         });
       }
     } catch (error) {
-      console.log("unable to authenticate user", error);
+      if (error.response.status === 403) {
+        showToast("Incorrect username/password", "fail");
+        setUserCredentials({
+          name: "",
+          password: "",
+        });
+      }
     }
   };
-
   const inputChangeHandler = (event) => {
     setUserCredentials({
       ...userCredentials,
@@ -83,16 +90,27 @@ export const Login = () => {
           });
         }
       };
+      const fetchAndUpdateUserWishlist = async () => {
+        const response = await axiosPrivate.get("/user/fetchwishlist");
+        console.log(response);
+        if (response.status === 200) {
+          dispatch({
+            type: "UPDATE-USER-WISHLIST-FROM-SERVER",
+            payload: response.data.userWishlist,
+          });
+        }
+      };
       mergeCartAndUpdate();
+      fetchAndUpdateUserWishlist();
       navigate(location?.state?.path || "/", { replace: true });
+      showToast("User logged in", "success");
     }
   }, [authState]);
-
+  //
   return (
     <>
       <div className="login-page-container">
         <div className="login-container">
-          {JSON.stringify(authState)}
           <div className="login-header-container">Plant Mart</div>
           <div className="login-input-container">
             <input

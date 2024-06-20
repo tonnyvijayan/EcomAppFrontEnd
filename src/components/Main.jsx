@@ -8,6 +8,7 @@ import { Cart } from "./Cart/Cart";
 import { SignUp } from "./Signup/SignUp";
 import { Wishlist } from "./Wishlist/Wishlist";
 import { PrivateRoute } from "./PrivateRotue/PrivateRoute";
+import { Toast } from "./Toast/Toast";
 
 export const Main = () => {
   return (
@@ -24,6 +25,7 @@ export const Main = () => {
             <Route path="/wishlist" element={<Wishlist />} />
           </Route>
         </Routes>
+        <Toast />
       </div>
     </>
   );

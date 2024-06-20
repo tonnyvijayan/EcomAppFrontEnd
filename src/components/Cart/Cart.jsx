@@ -4,13 +4,18 @@ import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 import { useProductContext } from "../../hooks/useProductContext";
 import { EmptyCart } from "./EmptyCart";
 import { useAuth } from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useToast } from "../../hooks/useToast";
 //
 export const Cart = () => {
   const { state, dispatch } = useProductContext();
+  const [showModal, setShowModal] = useState(false);
   const { authState } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const axiosPrivate = useAxiosPrivate();
+  const showToast = useToast();
 
   const productsInCart = state.cartItems.map((item) => {
     const [productDetails] = state.products.filter((product) => {
@@ -34,14 +39,11 @@ export const Cart = () => {
 
     if (authState) {
       try {
-        const response = await axiosPrivate.post("/user/removefromcart", {
+        await axiosPrivate.post("/user/removefromcart", {
           productId: _id,
         });
-        if (response.status === 200) {
-          console.log("Product removed from cart");
-        }
       } catch (error) {
-        console.log("Unable to remove item from cart");
+        showToast("Unable to remove item from cart", "fail");
       }
     }
   };
@@ -55,14 +57,11 @@ export const Cart = () => {
 
     if (authState) {
       try {
-        const response = await axiosPrivate.post("/user/increaseitemquantity", {
+        await axiosPrivate.post("/user/increaseitemquantity", {
           productId: _id,
         });
-        if (response.status === 201) {
-          console.log("Item quantity increased");
-        }
       } catch (error) {
-        console.log("Unable to increase item quantity");
+        showToast("Unable to increase item quantity", "fail");
       }
     }
   };
@@ -77,14 +76,11 @@ export const Cart = () => {
     dispatch({ type: "DECREASE-CART-ITEM-QUANTITY", payload: updatedCart });
     if (authState) {
       try {
-        const response = await axiosPrivate.post("/user/decreaseitemquantity", {
+        await axiosPrivate.post("/user/decreaseitemquantity", {
           productId: _id,
         });
-        if (response.status === 201) {
-          console.log("Item quantity decreased");
-        }
       } catch (error) {
-        console.log("unable to decrease item quantity");
+        showToast("Unable to decrease item quantity", "fail");
       }
     }
   };
@@ -105,7 +101,6 @@ export const Cart = () => {
           }
         );
 
-        console.log({ moveToWishlistResponse, removeFromCartResponse });
         if (
           moveToWishlistResponse.status === 201 &&
           removeFromCartResponse.status === 200
@@ -120,11 +115,28 @@ export const Cart = () => {
           dispatch({ type: "REMOVE-FROM-CART", payload: updatedCart });
         }
       } catch (error) {
-        console.log("Unable to move item to wishlist", error);
+        showToast("Unable to move item to wishlist", "fail");
       }
     } else {
       navigate("/wishlist");
-      //show toast to login to add to wishlist
+      showToast("Login to add to wishlist", "fail");
+    }
+  };
+
+  const confirmOrderHandler = () => {
+    setShowModal(true);
+  };
+
+  const placeOrderHandler = async () => {
+    try {
+      const respone = await axiosPrivate.post("/user/placeorder");
+      if (respone.status === 201) {
+        dispatch({ type: "CLEAR-CART", payload: [] });
+      }
+      navigate("/");
+      showToast("Order is being processed", "success");
+    } catch (error) {
+      showToast("Unable to process order", "fail");
     }
   };
 
@@ -244,10 +256,45 @@ export const Cart = () => {
           </div>
 
           <div className="confirm-button-container">
-            <button className="button-primary-cartlist mg-top">Confirm</button>
+            <button
+              className="button-primary-cartlist mg-top"
+              onClick={confirmOrderHandler}
+            >
+              Confirm
+            </button>
           </div>
         </div>
       )}
+      <div
+        onClick={() => {
+          setShowModal(false);
+        }}
+        className={`cart-page-order-modal ${showModal ? "show" : ""}`}
+      >
+        <div className="modal-detail">
+          {authState ? (
+            <div className="cart-modal-details">
+              <strong>{`${state.cartItems.length} ${
+                state.cartItems.length > 1 ? "items" : "item"
+              } totalling Rs:${Math.trunc(
+                0.18 * cartTotal + cartTotal
+              )}`}</strong>
+              <button onClick={placeOrderHandler}>Place Order</button>
+            </div>
+          ) : (
+            <div className="cart-modal-details">
+              <strong>Log in to place your order</strong>
+              <button
+                onClick={() => {
+                  navigate("/login", { state: { path: location.pathname } });
+                }}
+              >
+                login
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </>
   );
 };

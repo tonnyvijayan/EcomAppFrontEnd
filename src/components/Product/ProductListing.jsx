@@ -2,9 +2,10 @@ import "./ProductListing.css";
 import { useProductContext } from "../../hooks/useProductContext";
 import { ProductCard } from "./ProductCard";
 import { useSearchParams } from "react-router-dom";
-
+import { Spinner } from "../Spinner/Spinner";
+//
 export const ProductListing = () => {
-  const { state } = useProductContext();
+  const { state, loading } = useProductContext();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortAndFilterProducts = () => {
@@ -56,33 +57,39 @@ export const ProductListing = () => {
     });
 
   return (
-    <div className="productlisting-container">
-      {/* {JSON.stringify(searchParams.getAll("sort"))} */}
-      {sortedAndFilteredProducts?.map((item) => {
-        const {
-          _id,
-          name,
-          price,
-          imageUrl,
-          rating,
-          maxDiscount,
-          inStock,
-          deliveryTime,
-        } = item;
-        return (
-          <ProductCard
-            _id={_id}
-            key={_id}
-            title={name}
-            price={price}
-            imageUrl={imageUrl}
-            rating={rating}
-            discount={maxDiscount}
-            inStock={inStock}
-            deliveryTime={deliveryTime}
-          />
-        );
-      })}
-    </div>
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="productlisting-container">
+          {/* {JSON.stringify(searchParams.getAll("sort"))} */}
+          {sortedAndFilteredProducts?.map((item) => {
+            const {
+              _id,
+              name,
+              price,
+              imageUrl,
+              rating,
+              maxDiscount,
+              inStock,
+              deliveryTime,
+            } = item;
+            return (
+              <ProductCard
+                _id={_id}
+                key={_id}
+                title={name}
+                price={price}
+                imageUrl={imageUrl}
+                rating={rating}
+                discount={maxDiscount}
+                inStock={inStock}
+                deliveryTime={deliveryTime}
+              />
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 };

@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useProductContext } from "../../hooks/useProductContext";
 import { useNavigate } from "react-router-dom";
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
+import { useToast } from "../../hooks/useToast";
 
 export const ProductCard = ({
   _id,
@@ -19,6 +20,7 @@ export const ProductCard = ({
   const { authState } = useAuth();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
+  const showToast = useToast();
 
   const itemsInCart = state.cartItems.map((item) => item._id);
 
@@ -60,7 +62,7 @@ export const ProductCard = ({
       }
     } else {
       navigate("/wishlist");
-      //show toast to login to add to wishlist
+      showToast("Login to add to wishlist", "fail");
     }
   };
 
