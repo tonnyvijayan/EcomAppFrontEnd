@@ -1,4 +1,4 @@
-.emptycart-container {
+.routenotfound-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,10 +7,7 @@
   background-color: var(--secondary-color);
 }
 
-.emptycart-container a {
-  text-decoration: none;
-}
-.emptycart-header-container {
+.routenotfound-header-container {
   font-weight: bold;
   font-size: xx-large;
   color: var(--primary-color);

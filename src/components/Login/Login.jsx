@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import "./Login.css";
+import { useEffect, useState } from "react";
 import axios from "../../axios/axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
@@ -19,14 +19,13 @@ export const Login = () => {
     name: "",
     password: "",
   });
-  const { authState, setAuthState } = useAuth();
+  const { authState, setAuthState, persist, setPersist } = useAuth();
   const [showLoginError, setLoginError] = useState({
     name: "",
     password: "",
   });
 
   const loginButtonHandler = async () => {
-    console.log("location from login", location);
     try {
       if (userCredentials.name && userCredentials.password) {
         const response = await axios.post(
@@ -58,7 +57,7 @@ export const Login = () => {
         });
       }
     } catch (error) {
-      if (error.response.status === 403) {
+      if (error.response.status === 403 || error.response.status === 401) {
         showToast("Incorrect username/password", "fail");
         setUserCredentials({
           name: "",
@@ -74,15 +73,21 @@ export const Login = () => {
     });
   };
 
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
   useEffect(() => {
-    console.log("login useEffect fired");
+    localStorage.setItem("persist", persist);
+  }, [persist]);
+
+  useEffect(() => {
     if (authState) {
-      console.log("useEffect fired after authState set");
       const mergeCartAndUpdate = async () => {
         const mergeCart = await axiosPrivate.post("/user/mergecart", {
           clientCartItems: state.cartItems,
         });
-        console.log("mergecart", mergeCart);
+
         if (mergeCart.status === 201) {
           dispatch({
             type: "MERGE-LOCAL-CART-AND-DB-CART-ITEMS",
@@ -92,7 +97,6 @@ export const Login = () => {
       };
       const fetchAndUpdateUserWishlist = async () => {
         const response = await axiosPrivate.get("/user/fetchwishlist");
-        console.log(response);
         if (response.status === 200) {
           dispatch({
             type: "UPDATE-USER-WISHLIST-FROM-SERVER",
@@ -106,7 +110,7 @@ export const Login = () => {
       showToast("User logged in", "success");
     }
   }, [authState]);
-  //
+
   return (
     <>
       <div className="login-page-container">
@@ -132,7 +136,12 @@ export const Login = () => {
           </div>
           <div className="login-persist-container">
             <label htmlFor="persistcheckbox">
-              <input type="checkbox" id="persistcheckbox" />
+              <input
+                type="checkbox"
+                id="persistcheckbox"
+                checked={persist}
+                onChange={togglePersist}
+              />
               Trust this device
             </label>
           </div>

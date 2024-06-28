@@ -1,0 +1,12 @@
+.categorylisting-container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+}
+
+@media screen and (max-width: 650px) {
+  .categorylisting-container {
+    justify-content: center;
+  }
+}

@@ -14,12 +14,10 @@
 
 .like-location {
   position: absolute;
-  /* top: 310px; */
   top: 16.5rem;
-
   right: 10px;
   cursor: pointer;
-  color: #b91c1c;
+  color: var(--darkred);
 }
 
 .card-product-image-responsive {
@@ -31,7 +29,7 @@
 
 .card {
   position: relative;
-  background-color: #fff;
+  background-color: var(--white);
   display: flex;
   flex-direction: column;
   border: 1px solid rgb(235, 229, 229);
@@ -42,28 +40,28 @@
   height: fit-content;
 }
 .card:hover {
-  box-shadow: 2px 2px 8px #fff;
+  box-shadow: 2px 2px 8px var(--white);
 }
 
 .card-button-primary {
-  background-color: #1e453e;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: var(--white);
   padding: 1rem 2rem;
   cursor: pointer;
   font-weight: bold;
   outline: none;
-  border: 1px solid #1e453e;
+  border: 1px solid var(--primary-color);
 }
 
 .card-button-secondary {
-  background-color: #fff;
-  color: #1e453e;
+  background-color: var(--white);
+  color: var(--primary-color);
   padding: 1rem 2rem;
   cursor: not-allowed;
 
   font-weight: bold;
   outline: none;
-  border: 2px solid #1e453e;
+  border: 2px solid var(--primary-color);
 }
 
 .card-description {
@@ -106,9 +104,9 @@
 }
 .rating-badge {
   margin-left: 8px;
-  border: 1px solid #1e453e;
-  background-color: #1e453e;
-  color: white;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--white);
   padding: 0.1rem;
   font-weight: bold;
 }

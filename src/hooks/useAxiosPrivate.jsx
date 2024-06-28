@@ -8,12 +8,10 @@ export const useAxiosPrivate = () => {
   const refresh = useRefresh();
 
   useEffect(() => {
-    console.log("interceptors being attached");
     const requestInterceptors = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
           config.headers["Authorization"] = `Bearer ${authState}`;
-          console.log("attached request interceptors ");
         }
         return config;
       },
@@ -26,7 +24,6 @@ export const useAxiosPrivate = () => {
         return response;
       },
       async (err) => {
-        console.log("caught error request interceptors ");
         const previousRequest = err?.config;
         if (err?.response?.status === 403 && !previousRequest?.sent) {
           previousRequest.sent = true;

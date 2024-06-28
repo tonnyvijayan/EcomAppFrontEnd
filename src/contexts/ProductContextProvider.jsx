@@ -12,6 +12,9 @@ const reducer = (state, action) => {
     case "UPDATE-LOCAL-PRODUCT-STATE-FROM-SERVER":
       return { ...state, products: action.payload };
 
+    case "FETCH-USER-CART-FROM-SERVER":
+      return { ...state, cartItems: action.payload };
+
     case "ADD-TO-CART":
       return { ...state, cartItems: [...state.cartItems, action.payload] };
 
@@ -59,7 +62,7 @@ export const ProductContextProvider = ({ children }) => {
     active: false,
     type: "",
   });
-  //
+
   useEffect(() => {
     let isMounted = true;
     let controller = new AbortController();
@@ -68,7 +71,6 @@ export const ProductContextProvider = ({ children }) => {
         const productData = await axios.get("products/fetchproducts", {
           signal: controller.signal,
         });
-        console.log("fetching products", productData.data.products);
         isMounted &&
           dispatch({
             type: "UPDATE-LOCAL-PRODUCT-STATE-FROM-SERVER",

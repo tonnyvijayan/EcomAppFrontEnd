@@ -1,19 +1,23 @@
-import "./ProductListing.css";
+import "./Category.css";
 import { useProductContext } from "../../hooks/useProductContext";
-import { ProductCard } from "./ProductCard";
-import { useSearchParams } from "react-router-dom";
+import { ProductCard } from "../Product/ProductCard";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Spinner } from "../Spinner/Spinner";
 
-export const ProductListing = () => {
+export const Category = () => {
+  const { categoryId } = useParams();
   const { state, loading } = useProductContext();
   const [searchParams] = useSearchParams();
+  const categoryProducts = state.products.filter((item) => {
+    return item.category === categoryId;
+  });
 
-  const sortAndFilterProducts = () => {
+  const sortAndFilterCategoryProducts = () => {
     if (
       searchParams.getAll("sort").length > 0 &&
       searchParams.getAll("sort")[0] === "HIGH-TO-LOW"
     ) {
-      const sortedProducts = [...state.products].sort((a, b) => {
+      const sortedProducts = [...categoryProducts].sort((a, b) => {
         return (
           Math.trunc(b.price - b.price * (b.maxDiscount / 100)) -
           Math.trunc(a.price - a.price * (a.maxDiscount / 100))
@@ -24,7 +28,7 @@ export const ProductListing = () => {
       searchParams.getAll("sort").length > 0 &&
       searchParams.getAll("sort")[0] === "LOW-TO-HIGH"
     ) {
-      const sortedProducts = [...state.products].sort((a, b) => {
+      const sortedProducts = [...categoryProducts].sort((a, b) => {
         return (
           Math.trunc(a.price - a.price * (a.maxDiscount / 100)) -
           Math.trunc(b.price - b.price * (b.maxDiscount / 100))
@@ -32,11 +36,11 @@ export const ProductListing = () => {
       });
       return sortedProducts;
     } else {
-      return state.products;
+      return categoryProducts;
     }
   };
 
-  const sortedAndFilteredProducts = sortAndFilterProducts()
+  const sortedAndFilteredCategoryProducts = sortAndFilterCategoryProducts()
     .filter((item) => {
       return searchParams.getAll("inStock").length > 0 &&
         searchParams.getAll("inStock")[0] === "true"
@@ -61,8 +65,8 @@ export const ProductListing = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="productlisting-container">
-          {sortedAndFilteredProducts?.map((item) => {
+        <div className="categorylisting-container">
+          {sortedAndFilteredCategoryProducts?.map((item) => {
             const {
               _id,
               name,

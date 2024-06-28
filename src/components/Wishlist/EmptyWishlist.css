@@ -3,11 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   width: 100vw;
-
-  /* height: 100%; */
-  background-color: #f0faf6;
+  background-color: var(--secondary-color);
 }
 
 .emptywishlist-container a {
@@ -16,5 +13,5 @@
 .emptywishlist-header-container {
   font-weight: bold;
   font-size: xx-large;
-  color: #1e453e;
+  color: var(--primary-color);
 }

@@ -23,12 +23,10 @@ export const Wishlist = () => {
       const response = await axiosPrivate.post("/user/removefromwishlist", {
         productId: _id,
       });
-      console.log(response);
       if (response.status === 200) {
         const updatedWishlist = state.wishlistItems.filter((item) => {
           return item !== _id;
         });
-        console.log("remove from wishlist", updatedWishlist);
         dispatch({ type: "REMOVE-FROM-WISHLIST", payload: updatedWishlist });
       }
     } catch (error) {
@@ -60,10 +58,7 @@ export const Wishlist = () => {
           const updatedWishlist = state.wishlistItems.filter((item) => {
             return item !== _id;
           });
-          console.log("remove from wishlist", updatedWishlist);
           dispatch({ type: "REMOVE-FROM-WISHLIST", payload: updatedWishlist });
-
-          //show toast item moved to cart
         } else {
           console.log("Item already exists in cart");
         }

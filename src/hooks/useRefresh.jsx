@@ -2,15 +2,14 @@ import { axiosPrivate } from "../axios/axios";
 import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router-dom";
 import { useProductContext } from "./useProductContext";
-import { useToast } from "./useToast";
+import { useCallback } from "react";
 
 export const useRefresh = () => {
-  const { setAuthState } = useAuth();
+  const { setAuthState, setPersist } = useAuth();
   const { dispatch } = useProductContext();
   const navigate = useNavigate();
-  const showToast = useToast();
 
-  const refresh = async () => {
+  const refresh = useCallback(async () => {
     let newAccessToken = "";
 
     try {
@@ -23,16 +22,20 @@ export const useRefresh = () => {
         });
       }
     } catch (error) {
+      setPersist(false);
+
       setAuthState(() => {
         return "";
       });
       dispatch({ type: "USER-LOGOUT", payload: [] });
-      navigate("/");
-      showToast("Login again", "fail");
-      //show toast saying to login to continue action
+
+      navigate("/login", {
+        state: { location: location.pathname },
+        replace: true,
+      });
     }
     return newAccessToken;
-  };
+  }, []);
 
   return refresh;
 };

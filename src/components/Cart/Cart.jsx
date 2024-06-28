@@ -1,5 +1,4 @@
 import "./Cart.css";
-// import axios from "../../axios/axios";
 import { useAxiosPrivate } from "../../hooks/useAxiosPrivate";
 import { useProductContext } from "../../hooks/useProductContext";
 import { EmptyCart } from "./EmptyCart";
@@ -7,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "../../hooks/useToast";
-//
+
 export const Cart = () => {
   const { state, dispatch } = useProductContext();
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +16,7 @@ export const Cart = () => {
   const axiosPrivate = useAxiosPrivate();
   const showToast = useToast();
 
-  const productsInCart = state.cartItems.map((item) => {
+  const productsInCart = state?.cartItems?.map((item) => {
     const [productDetails] = state.products.filter((product) => {
       return product._id === item._id;
     });
@@ -190,15 +189,6 @@ export const Cart = () => {
                                 To Wishlist
                               </button>
                             )}
-
-                            {/* <button
-                              className="button-primary-cartlist"
-                              onClick={() => {
-                                moveToWishlistHandler(_id);
-                              }}
-                            >
-                              To Wishlist
-                            </button> */}
 
                             <button
                               onClick={() => removeFromCartHandler(_id)}

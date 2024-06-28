@@ -1,5 +1,5 @@
 .cart-page-container {
-  background-color: #fff;
+  background-color: var(--white);
   width: 100%;
   align-self: flex-start;
   height: 100%;
@@ -15,8 +15,8 @@ table {
 table th {
   text-align: left;
   padding: 10px;
-  background-color: #1e453e;
-  color: #aaa;
+  background-color: var(--primary-color);
+  color: var(--white);
 }
 table td {
   padding: 10px 10px;
@@ -54,8 +54,8 @@ td img {
 }
 
 .total-price-div table {
-  border-top: 4px solid #1e453e;
-  border-bottom: 4px solid #1e453e;
+  border-top: 4px solid var(--primary-color);
+  border-bottom: 4px solid var(--primary-color);
   width: 100%;
   max-width: 420px;
 }
@@ -76,18 +76,18 @@ td:last-child {
 }
 
 .button-primary-cartlist {
-  background-color: #1e453e;
+  background-color: var(--primary-color);
   color: #f5f5f5;
   padding: 0.4rem 0.8rem;
-  border: 1px solid #1e453e;
+  border: 1px solid var(--primary-color);
   cursor: pointer;
   width: fit-content;
 }
 .button-secondary-cartlist {
   background-color: #f5f5f5;
-  color: #1e453e;
+  color: var(--primary-color);
   padding: 0.4rem 0.8rem;
-  border: 1px solid #1e453e;
+  border: 1px solid var(--primary-color);
   cursor: pointer;
 }
 .confirm-button-container {
@@ -123,15 +123,15 @@ td:last-child {
   align-items: center;
   width: 400px;
   height: 300px;
-  background-color: #fff;
+  background-color: var(--white);
   border-radius: 5px;
 }
 
 .modal-detail button {
   padding: 0.5rem 1.5rem;
   margin: 1rem;
-  border: 2px solid #1e453e;
-  background-color: #fff;
+  border: 2px solid var(--primary-color);
+  background-color: var(--white);
   cursor: pointer;
 }
 
@@ -148,6 +148,6 @@ td:last-child {
 }
 .modal-detail a {
   text-decoration: none;
-  color: #1e453e;
+  color: var(--primary-color);
   font-weight: bolder;
 }

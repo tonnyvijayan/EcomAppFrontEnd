@@ -31,14 +31,9 @@ export const ProductCard = ({
     });
     if (authState) {
       try {
-        const response = await axiosPrivate.post("/user/addtocart", {
+        await axiosPrivate.post("/user/addtocart", {
           productId: _id,
         });
-        if (response.status === 201) {
-          console.log("Item added to cart");
-        } else {
-          console.log("Item already exists in cart");
-        }
       } catch (error) {
         console.log("Unable to add product to cart");
       }
@@ -46,7 +41,6 @@ export const ProductCard = ({
   };
 
   const addToWishlistHandler = async (_id) => {
-    console.log(_id);
     if (authState) {
       try {
         const response = await axiosPrivate.post("/user/addtowishlist", {
@@ -54,7 +48,6 @@ export const ProductCard = ({
         });
         if (response.status === 201) {
           const updatedWishlist = [...state.wishlistItems, _id];
-          console.log("from add to wishlist", updatedWishlist);
           dispatch({ type: "ADD-TO-WISHLIST", payload: updatedWishlist });
         }
       } catch (error) {
@@ -71,22 +64,21 @@ export const ProductCard = ({
       const response = await axiosPrivate.post("/user/removefromwishlist", {
         productId: _id,
       });
-      console.log(response);
+
       if (response.status === 200) {
         const updatedWishlist = state.wishlistItems.filter((item) => {
           return item !== _id;
         });
-        console.log("remove from wishlist", updatedWishlist);
+
         dispatch({ type: "REMOVE-FROM-WISHLIST", payload: updatedWishlist });
       }
     } catch (error) {
-      console.log("unable to remove product from wishlist");
+      console.log("Unable to remove product from wishlist");
     }
   };
-  //
   return (
     <div className="card" key={_id}>
-      <Link to={`/${_id}`}>
+      <Link to={`/productdetail/${_id}`}>
         <img className="card-image-responsive" src={imageUrl} alt="image" />
       </Link>
       <h3 className="card-heading">{title}</h3>

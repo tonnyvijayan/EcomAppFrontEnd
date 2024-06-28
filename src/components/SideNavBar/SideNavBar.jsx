@@ -1,5 +1,5 @@
 import "./SideNavBar.css";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams, Link } from "react-router-dom";
 
 export const SideNavBar = () => {
   const location = useLocation();
@@ -8,13 +8,9 @@ export const SideNavBar = () => {
   const sortHandler = (sortType) => {
     searchParams.set("sort", sortType);
     setSearchParams(searchParams);
-    // setSearchParams({ sort: sortType });
   };
 
   const filterHandler = (event) => {
-    console.log(event.target.checked);
-    console.log(searchParams.getAll("sort"));
-
     if (event.target.checked) {
       searchParams.set(event.target.name, "true");
       setSearchParams(searchParams);
@@ -24,18 +20,19 @@ export const SideNavBar = () => {
     }
   };
 
-  //
+  const categoryPath = new RegExp("categories");
+
   return (
     <>
       <div className="side-nav-bar-container">
         <div className="side-nav-bar-categories-container">
           <h3>Categories</h3>
-          <a href="">Outdoor</a>
-          <a href="">Indoor</a>
-          <a href="">Succulents</a>
-          <a href="">Hanging</a>
+          <Link to="/categories/creepers">Creepers</Link>
+          <Link to="/categories/flowering">Flowering</Link>
+          <Link to="/categories/succulent">Succulents</Link>
+          <Link to="/categories/Hanging plants">Hanging</Link>
         </div>
-        {location.pathname === "/" ? (
+        {location.pathname === "/" || categoryPath.test(location.pathname) ? (
           <div className="side-nav-bar-filters-container">
             <div className="fieldsetDivContainer">
               <fieldset>

@@ -17,11 +17,12 @@ import { useToast } from "../../hooks/useToast";
 
 export const TopNavBar = () => {
   const { state, dispatch } = useProductContext();
-  const { authState, setAuthState } = useAuth();
+  const { authState, setAuthState, setPersist } = useAuth();
   const [toogleMenu, setToogleMenu] = useState(false);
   const [toogleCategories, setToogleCategories] = useState(false);
   const [toogleFilters, setToogleFilters] = useState(false);
   const showToast = useToast();
+  const categoryPath = new RegExp("categories");
 
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -35,9 +36,6 @@ export const TopNavBar = () => {
   };
 
   const filterHandler = (event) => {
-    console.log(event.target.checked);
-    console.log(searchParams.getAll("sort"));
-
     if (event.target.checked) {
       searchParams.set(event.target.name, "true");
       setSearchParams(searchParams);
@@ -47,7 +45,6 @@ export const TopNavBar = () => {
     }
   };
 
-  ///////////////////////////////
   const menuHandler = () => {
     setToogleMenu((prev) => !prev);
     setToogleCategories(false);
@@ -69,23 +66,22 @@ export const TopNavBar = () => {
       dispatch({ type: "USER-LOGOUT", payload: [] });
       navigate("/");
       setToogleMenu((prev) => !prev);
+      setPersist(false);
       showToast("Logged Out", "success");
     } catch (error) {
       console.log("unable to logout user");
     }
   };
 
-  console.log("sort1", searchParams);
   return (
     <div className="Top-Nav-Bar-Container">
       <div className="brand-logo-container">
         <Link to="/">
           <img src={brandLogo} alt="brand-logo" className="brand-logo" />
         </Link>
-
+        {/*  */}
         <strong>PlantMart</strong>
       </div>
-
       <div className="user-detail-container">
         <div className="icon-badge-container">
           {state.cartItems.length > 0 ? (
@@ -123,17 +119,18 @@ export const TopNavBar = () => {
               <div
                 className="categories-list"
                 style={{ display: toogleCategories ? "flex" : "none" }}
+                onClick={menuHandler}
               >
-                <a href="">Outdoor</a>
-                <a href="">Indoor</a>
-                <a href="">Succulents</a>
-                <a href="">Hanging</a>
+                <Link to="/categories/creepers">Creepers</Link>
+                <Link to="/categories/flowering">Flowering</Link>
+                <Link to="/categories/succulent">Succulents</Link>
+                <Link to="/categories/Hanging plants">Hanging</Link>
               </div>
             </div>
-            {location.pathname === "/" ? (
+            {location.pathname === "/" ||
+            categoryPath.test(location.pathname) ? (
               <div className="filter-categories-div">
                 <span onClick={filterDropDownHandler}>Filters</span>
-                {/*  */}
 
                 <div
                   className="categories-list"
@@ -264,5 +261,3 @@ export const TopNavBar = () => {
     </div>
   );
 };
-
-//
