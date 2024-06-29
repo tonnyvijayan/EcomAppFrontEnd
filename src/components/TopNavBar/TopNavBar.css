@@ -36,7 +36,8 @@
 }
 
 .menu-div-container {
-  position: absolute;
+  /* position: absolute; */
+  position: fixed;
   z-index: 20;
   width: 300px;
   height: fit-content;
@@ -136,4 +137,13 @@
   .filter-categories-div {
     display: block;
   }
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
 }

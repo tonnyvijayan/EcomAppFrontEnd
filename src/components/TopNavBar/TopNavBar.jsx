@@ -109,6 +109,13 @@ export const TopNavBar = () => {
 
         <div>
           <div
+            className="menu-overlay"
+            onClick={menuHandler}
+            style={{
+              display: toogleMenu ? "block" : "none",
+            }}
+          ></div>
+          <div
             className="menu-div-container"
             style={{
               display: toogleMenu ? "block" : "none",
