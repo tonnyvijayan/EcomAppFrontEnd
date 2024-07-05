@@ -1,8 +1,15 @@
-# React + Vite
+# Plantmart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fullstack ecommerce application
 
-Currently, two official plugins are available:
+- Website [Live link](https://plantmartapp.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### FrontEnd
+
+- Frontend code [Github link](https://github.com/tonnyvijayan/EcomAppFrontEnd/tree/dev)
+- Frontend pull request [Code review link](https://github.com/tonnyvijayan/EcomAppFrontEnd/pull/1)
+
+### BackEnd
+
+- Backend code [Github link](https://github.com/tonnyvijayan/EcomAppBackEnd/tree/dev)
+- Backend pull request [Code review link](https://github.com/tonnyvijayan/EcomAppBackEnd/pull/1)
