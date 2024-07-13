@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+.wishlist-container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+}
+
+.product-detail-bottom-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.card-image-responsive {
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 250px;
+}
+
+.wishlist-card {
+  position: relative;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(235, 229, 229);
+  border-radius: 15px;
+  margin: 10px;
+  width: 300px;
+  max-width: 100%;
+  height: fit-content;
+}
+.card:hover {
+  box-shadow: 2px 2px 8px var(--white);
+}
+
+.button-primary-one {
+  padding: 1rem 2rem;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+
+  margin: 0.5rem;
+}
+
+.dark-theme {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: 3px solid var(--primary-color);
+}
+
+.light-theme {
+  color: var(--primary-color);
+  background-color: var(--white);
+  border: 3px solid var(--primary-color);
+}
+
+.card-description {
+  margin-left: 8px;
+  text-align: left;
+  flex-grow: 2;
+}
+.card-heading {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-left: 8px;
+  text-align: left;
+}
+
+.card-pricing {
+  margin-left: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.card-product-currentprice {
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-right: 8px;
+}
+.card-product-originalprice {
+  font-size: 0.85rem;
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+.card-prodcut-discount {
+  font-weight: bold;
+  color: lightcoral;
+}
+.wishlist-button-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.rating-badge {
+  margin-left: 8px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.1rem;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 650px) {
+  .wishlist-container {
+    justify-content: center;
+  }
+}

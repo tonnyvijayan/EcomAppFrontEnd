@@ -1,0 +1,37 @@
+.toastDiv {
+  padding: 1rem 2rem;
+  display: none;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  text-align: center;
+  width: fit-content;
+  position: fixed;
+  bottom: 2%;
+  right: 2%;
+  z-index: 200;
+  animation: moveIn 0.3s ease-in;
+}
+
+@keyframes moveIn {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+.success {
+  background-color: var(--lightgreen);
+  color: var(--darkgreen);
+  border: 2px solid var(--darkgreen);
+}
+.fail {
+  background-color: var(--lightred);
+  color: var(--darkred);
+  border: 2px solid var(--darkred);
+}
+.show-toast {
+  display: flex;
+}

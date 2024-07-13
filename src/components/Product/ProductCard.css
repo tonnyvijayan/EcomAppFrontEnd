@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+.product-detail-bottom-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.like-location {
+  position: absolute;
+  top: 16.5rem;
+  right: 10px;
+  cursor: pointer;
+  color: var(--darkred);
+}
+
+.card-product-image-responsive {
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 250px;
+}
+
+.card {
+  position: relative;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(235, 229, 229);
+  border-radius: 15px;
+  margin: 10px;
+  width: 300px;
+
+  height: fit-content;
+}
+.card:hover {
+  box-shadow: 2px 2px 8px var(--white);
+}
+
+.card-button-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 1rem 2rem;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+  border: 1px solid var(--primary-color);
+}
+
+.card-button-secondary {
+  background-color: var(--white);
+  color: var(--primary-color);
+  padding: 1rem 2rem;
+  cursor: not-allowed;
+
+  font-weight: bold;
+  outline: none;
+  border: 2px solid var(--primary-color);
+}
+
+.card-description {
+  margin-left: 8px;
+  text-align: left;
+  flex-grow: 2;
+}
+.card-heading {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-left: 8px;
+  text-align: left;
+}
+
+.card-pricing {
+  margin-left: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.card-product-currentprice {
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-right: 8px;
+}
+.card-product-originalprice {
+  font-size: 0.85rem;
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+.card-prodcut-discount {
+  font-weight: bold;
+  color: lightcoral;
+}
+.card-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.rating-badge {
+  margin-left: 8px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.1rem;
+  font-weight: bold;
+}

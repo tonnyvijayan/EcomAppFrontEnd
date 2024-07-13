@@ -1,0 +1,13 @@
+.main-container {
+  display: flex;
+  grid-column: 2/6;
+  background-color: var(--secondary-color);
+  min-height: 100vh;
+  max-height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .main-container {
+    grid-column: 1/6;
+  }
+}

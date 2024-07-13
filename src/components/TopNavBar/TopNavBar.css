@@ -1,0 +1,149 @@
+.Top-Nav-Bar-Container {
+  grid-column: 1/6;
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 110px;
+  background-color: #f8f9fc;
+  z-index: 100;
+}
+.brand-logo-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-detail-container {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  height: 100%;
+}
+
+.brand-logo {
+  margin-right: 5px;
+  width: 60px;
+  padding: 0.1rem;
+  cursor: pointer;
+}
+
+.menu-div-container {
+  /* position: absolute; */
+  position: fixed;
+  z-index: 20;
+  width: 300px;
+  height: fit-content;
+  top: 90px;
+  right: 30px;
+  border-radius: 10px;
+}
+.menu-div-container > div {
+  background-color: var(--primary-color);
+  padding: 1.5rem 0;
+  text-align: center;
+  border: 1px solid var(--grey);
+}
+
+.categories-list {
+  margin-top: 20px;
+  margin-bottom: 0px;
+  border-top: 2px solid var(--grey);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+}
+
+.menu-div-container a {
+  text-decoration: none;
+  color: var(--white);
+}
+
+.categories-list > a {
+  color: var(--primary-color);
+  padding: 0.5rem 0rem;
+}
+.menu-div-container span {
+  color: var(--white);
+}
+
+.icon-badge-container {
+  position: relative;
+}
+.icon-badge-number {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -6.5px;
+  right: 0px;
+  background-color: var(--darkred);
+  color: var(--white);
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+}
+.logout-button {
+  color: var(--white);
+  background-color: var(--primary-color);
+  outline: none;
+  font-weight: bolder;
+  border: none;
+  cursor: pointer;
+}
+
+.fieldsetDivContainerTopNav {
+  width: 100%;
+}
+
+.fieldsetDivContainerTopNav div {
+  background-color: var(--white);
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.fieldsetDivContainerTopNav label {
+  margin-left: 4px;
+  color: var(--primary-color);
+}
+
+.filter-categories-div {
+  display: none;
+}
+
+.topnav-reset {
+  padding: 0.4rem 0.8rem;
+  margin: 6px auto;
+  width: 80px;
+  border-radius: 2px;
+  font-weight: bold;
+  border: 2px solid var(--primary-color);
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .brand-logo {
+    width: 50px;
+    padding: 0.3rem;
+  }
+  .filter-categories-div {
+    display: block;
+  }
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+}
